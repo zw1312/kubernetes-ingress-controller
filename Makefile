@@ -46,3 +46,13 @@ container:
 .PHONY: run
 run:
 	./hack/dev/start.sh ${DB} ${RUN_VERSION}
+
+.PHONY: delve-container
+delve-container:
+	git clone https://github.com/go-delve/delve.git
+	docker build \
+    --build-arg TAG=${TAG} --build-arg COMMIT=${COMMIT} \
+    --build-arg REPO_INFO=${REPO_INFO} \
+	-f DelveDockerfile \
+    -t ${IMAGE}:${TAG} .
+	rm -rf ./delve
