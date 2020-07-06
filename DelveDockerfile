@@ -39,4 +39,5 @@ USER 1000
 #ENTRYPOINT ["/kong-ingress-controller"]
 EXPOSE 2345
 
-CMD ["dlv", "exec", "--continue", "--accept-multiclient" "--headless", "--api-version=2", "--listen=:2345", "--log", "/kong-ingress-controller"]
+ENTRYPOINT ["/bin/dlv"]
+CMD ["exec", "--continue", "--accept-multiclient",  "--headless", "--api-version=2", "--listen=:2345", "--log", "/kong-ingress-controller"]
