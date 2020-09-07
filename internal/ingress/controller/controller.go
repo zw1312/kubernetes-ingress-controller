@@ -88,8 +88,8 @@ type Configuration struct {
 	UpdateStatusOnShutdown bool
 	ElectionID             string
 
-	UseNetworkingV1beta1        bool
-	EnableKnativeIngressSupport bool
+	IngressV1beta1UsesNetworking bool
+	EnableKnativeIngressSupport  bool
 
 	Logger logrus.FieldLogger
 }
@@ -182,14 +182,14 @@ func NewKongController(ctx context.Context,
 	if config.UpdateStatus {
 		var err error
 		n.syncStatus, err = status.NewStatusSyncer(ctx, status.Config{
-			CoreClient:             config.KubeClient,
-			KongConfigClient:       config.KongConfigClient,
-			KnativeClient:          config.KnativeClient,
-			PublishService:         config.PublishService,
-			PublishStatusAddress:   config.PublishStatusAddress,
-			IngressLister:          n.store,
-			UpdateStatusOnShutdown: config.UpdateStatusOnShutdown,
-			UseNetworkingV1beta1:   config.UseNetworkingV1beta1,
+			CoreClient:                   config.KubeClient,
+			KongConfigClient:             config.KongConfigClient,
+			KnativeClient:                config.KnativeClient,
+			PublishService:               config.PublishService,
+			PublishStatusAddress:         config.PublishStatusAddress,
+			IngressLister:                n.store,
+			UpdateStatusOnShutdown:       config.UpdateStatusOnShutdown,
+			IngressV1beta1UsesNetworking: config.IngressV1beta1UsesNetworking,
 			OnStartedLeading: func() {
 				// force a sync
 				n.syncQueue.Enqueue(&networking.Ingress{})
