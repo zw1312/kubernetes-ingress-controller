@@ -61,7 +61,7 @@ Let's expose these services outside the Kubernetes cluster
 by defining Ingress rules.
 
 ```bash
-$ echo "
+$ echo '
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -78,7 +78,7 @@ spec:
         backend:
           serviceName: httpbin
           servicePort: 80
-" | kubectl apply -f -
+'| kubectl apply -f -
 ingress.extensions/demo created
 
 $ echo "
